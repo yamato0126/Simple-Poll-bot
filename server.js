@@ -32,8 +32,8 @@ http.createServer(function(req, res){
 }).listen(3000);
 
 client.on('ready', message =>{
- console.log('Bot準備完了～');
- client.user.setPresence({ activity: { name: 'げーむ' } });
+ console.log('Bot準備完了');
+ client.user.setPresence({ activity: { name: '人生' } });
 });
 
 client.on('message', message =>{
@@ -44,8 +44,8 @@ client.on('message', message =>{
    sendReply(message, "呼びましたか？");
    return;
  }
- if (message.content.match(/にゃ～ん|にゃーん/)){
-   let text = "にゃ～ん";
+ if (message.content.match(/だるい|だるい/)){
+   let text = "そんなあなたへ";
    sendMsg(message.channel.id, text);
    return;
  }
@@ -65,7 +65,8 @@ function sendReply(message, text){
 }
 
 function sendMsg(channelId, text, option={}){
- client.channels.get(channelId).send(text, option)
-   .then(console.log("メッセージ送信: " + text + JSON.stringify(option)))
-   .catch(console.error);
+  client.channels.get(channelId).send(text, option)
+    .then(console.log("メッセージ送信: " + text + JSON.stringify(option)))
+    .catch(console.error);
+  client.channels.get(channelId).send({ files: ['https://cdn.glitch.global/8dc96b44-b90d-44f5-aa3b-9fbc17aabda8/justdoit.jpg?v=1656248211531'] });
 }
