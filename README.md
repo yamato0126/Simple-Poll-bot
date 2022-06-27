@@ -1,3 +1,15 @@
+# Discord投票bot
+!s-poll タイトル 投票期限 選択肢1 選択肢2 ... で投票を作成できます。
+
+投票期限の前日にリマインドしてくれます。
+
+たまに JustDoItおじさん がでてきます。
+
+参考URL1：https://note.com/exteoi/n/nf1c37cb26c41
+
+参考URL2：https://scrapbox.io/discordjs-japan/%E7%B0%A1%E6%98%93%E7%9A%84%E3%81%AA%E6%8A%95%E7%A5%A8%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%81%AE%E3%82%B5%E3%83%B3%E3%83%97%E3%83%AB
+
+
 # Hello Node!
 
 This project includes a Node.js server script and a web page that connects to it. The front-end page presents a form the visitor can use to submit a color name, sending the submitted value to the back-end API running on the server. The server returns info to the page that allows it to update the display with the chosen color. 🎨
