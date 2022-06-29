@@ -48,9 +48,9 @@ client.on('messageCreate', async message => {
   if (message.mentions.users.has(client.user.id)) {
     let text = "やっほー、" + message.author.username + "!!";
     sendReply(message, text);
-    text = "投票は、「!s-poll タイトル 投票期限 選択肢1 選択肢2 ...」でできるよ!!";
+    text = "投票は、「!s-poll タイトル リマインド 選択肢1 選択肢2 ...」でできるよ!!";
     sendMsg(message, text);
-    text = "投票期限のフォーマット -> 2022/06/28";
+    text = "補足：リマインド = 2 -> 2日後にリマインド";
     sendMsg(message, text);
     return;
   }
@@ -80,7 +80,7 @@ client.login(process.env.DISCORD_BOT_TOKEN);
 
 
 async function makePoll(message, args) {
-  const [title, deadline, ...choices] = args;
+  const [title, remain, ...choices] = args;
   
   if (!title) {
     let text = "タイトルを指定して!!";
@@ -104,20 +104,32 @@ async function makePoll(message, args) {
   poll.edit({embeds:[embed]});
 
 
-  let deadline_time = deadline + " 23:00";
+  if(isNaN(remain)){
+    let text = "リマインドは数値で!!";
+    sendMsg(message, text);
+    return; 
+  }
 
-  const dead_date = new Date(deadline_time);
-  dead_date.setHours(dead_date.getHours() - 9);
+  const remain_num = Number(remain)
+  if(remain_num < 1){
+    let text = "リマインドは1以上の数で!!";
+    sendMsg(message, text);
+    return; 
+  }
+  if(!Number.isInteger(remain_num)){
+    let text = "リマインドは整数で!!";
+    sendMsg(message, text);
+    return; 
+  }
 
-  const remain_date = new Date(deadline_time);
-  remain_date.setHours(remain_date.getHours() - 9);
-  remain_date.setDate(remain_date.getDate() - 1);
+  const remain_date = new Date();
+  remain_date.setDate(remain_date.getDate() + remain_num);
 
-  console.log(remain_date);
+  console.log("リマインド日時: " + remain_date);
 
   schedule.scheduleJob(remain_date, function () {
-    let text = "投票締め切りまで残り24時間!!";
-    sendMsg(message, text);
+    let text = "投票リマインド!!";
+    sendReply(poll, text);
     let uri = "https://cdn.glitch.global/8dc96b44-b90d-44f5-aa3b-9fbc17aabda8/justdoit.jpg";
     sendImg(message, uri);
   });
